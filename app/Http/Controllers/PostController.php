@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function index(): Factory|Application|View
     {
-        $posts = Post::query()->where('is_published','=',true)->get();
+        $posts = Post::query()->without('comments')->where('is_published','=',true)->get();
 
 //        return view('posts', ['posts' => $posts]);
         return view('posts.index', compact('posts'));
@@ -29,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //ToDo ДЗ
+        return view('posts.create');
     }
 
     /**
@@ -37,7 +37,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //ToDo ДЗ
+        $data = $request->input();
+
+        $post = Post::create([
+            'title' => '',
+            'content' => '',
+            'description' => '',
+            'is_published' => true,
+        ]);
+
+        $post->update($data);
+        $post->save();
+
+        return redirect()->route('posts.index', $post);
     }
 
 //    /**

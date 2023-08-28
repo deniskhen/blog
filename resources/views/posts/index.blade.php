@@ -29,7 +29,17 @@
                 </div>
                 @endforeach
             </div>
-
+            <button class="btn_edit">
+                <a href="{{ route('posts.create', [$post]) }}">Создать новый пост</a>
+             </button>
+             <br><br>
+             <form action="{{ route('posts.destroy', [$post]) }}" method="post">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-primary">
+                   Удалить
+                </button>
+             </form>
         </div>
     </div>
 </section>
